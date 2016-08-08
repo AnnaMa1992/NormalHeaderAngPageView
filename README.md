@@ -6,4 +6,5 @@
 
 缺点：加在pageViewcontoller上的tablview/collectionView会跟随主视图一起滑动,也许会有人需要这种效果所以就放出来了
 
-https://github.com/AnnaMa1992/SimpleHeaderAngPageView/blob/master/HeaderViewAndPageView/Untitled.gif
+![gif](https://github.com/AnnaMa1992/SimpleHeaderAngPageView/blob/master/HeaderViewAndPageView/Untitled.gif)
+
