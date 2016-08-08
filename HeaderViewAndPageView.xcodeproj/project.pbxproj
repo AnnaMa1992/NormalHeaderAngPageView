@@ -23,6 +23,7 @@
 		90A05ECB1D587F1D00C8212A /* MYSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A05ECA1D587F1D00C8212A /* MYSegmentView.m */; };
 		90A05ECD1D58817A00C8212A /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90A05ECC1D58817A00C8212A /* bg.jpg */; };
 		90A05ED71D58886500C8212A /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90A05ED61D58886500C8212A /* avatar.jpg */; };
+		90A05EDC1D589EDA00C8212A /* Untitled.gif in Resources */ = {isa = PBXBuildFile; fileRef = 90A05EDB1D589EDA00C8212A /* Untitled.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		90A05ECA1D587F1D00C8212A /* MYSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MYSegmentView.m; path = ../MYSegmentView.m; sourceTree = "<group>"; };
 		90A05ECC1D58817A00C8212A /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		90A05ED61D58886500C8212A /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
+		90A05EDB1D589EDA00C8212A /* Untitled.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Untitled.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 		90A05E7E1D58779600C8212A /* HeaderViewAndPageView */ = {
 			isa = PBXGroup;
 			children = (
+				90A05EDB1D589EDA00C8212A /* Untitled.gif */,
 				90A05ECC1D58817A00C8212A /* bg.jpg */,
 				90A05ED61D58886500C8212A /* avatar.jpg */,
 				90A05ED81D58898E00C8212A /* pageview */,
@@ -304,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				90A05E8F1D58779600C8212A /* LaunchScreen.storyboard in Resources */,
+				90A05EDC1D589EDA00C8212A /* Untitled.gif in Resources */,
 				90A05ED71D58886500C8212A /* avatar.jpg in Resources */,
 				90A05E8C1D58779600C8212A /* Assets.xcassets in Resources */,
 				90A05ECD1D58817A00C8212A /* bg.jpg in Resources */,
@@ -566,6 +570,7 @@
 				90A05EAB1D58779600C8212A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		90A05EAC1D58779600C8212A /* Build configuration list for PBXNativeTarget "HeaderViewAndPageViewTests" */ = {
 			isa = XCConfigurationList;
@@ -574,6 +579,7 @@
 				90A05EAE1D58779600C8212A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		90A05EAF1D58779600C8212A /* Build configuration list for PBXNativeTarget "HeaderViewAndPageViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -582,6 +588,7 @@
 				90A05EB11D58779600C8212A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
