@@ -1,4 +1,4 @@
-# SimpleHeaderAngPageView
+#NormalHeaderAngPageView
 
 -简单的头部视图和分段视图控制器的联动效果
 
