@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ParentClassScrollViewController.h"
 
-@interface OneViewTableTableViewController : UIViewController
+@interface OneViewTableTableViewController : ParentClassScrollViewController
 
 @end

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ParentClassScrollViewController.h"
 
-@interface ThirdViewCollectionViewController : UIViewController
+@interface ThirdViewCollectionViewController : ParentClassScrollViewController
 
 @end

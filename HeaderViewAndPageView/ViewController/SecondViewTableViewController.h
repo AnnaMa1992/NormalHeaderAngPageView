@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SecondViewTableViewController : UIViewController
+#import "ParentClassScrollViewController.h"
+@interface SecondViewTableViewController : ParentClassScrollViewController
 
 @end

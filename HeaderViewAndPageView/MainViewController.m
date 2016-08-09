@@ -25,6 +25,10 @@ static CGFloat const headViewHeight = 256;
 @property(nonatomic,strong)UIImageView * avatarImage;
 @property(nonatomic,strong)UILabel *countentLabel;
 
+@property (nonatomic, assign) BOOL canScroll;
+@property (nonatomic, assign) BOOL isTopIsCanNotMoveTabView;
+@property (nonatomic, assign) BOOL isTopIsCanNotMoveTabViewPre;
+
 @end
 
 @implementation MainViewController
@@ -38,7 +42,23 @@ static CGFloat const headViewHeight = 256;
     
     [self.view addSubview:self.mainTableView];
     [self.mainTableView addSubview:self.headImageView];
+    
+    /* 
+     *
+     */
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(acceptMsg:) name:@"leaveTop" object:nil];
+
 }
+
+-(void)acceptMsg : (NSNotification *)notification{
+    
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *canScroll = userInfo[@"canScroll"];
+    if ([canScroll isEqualToString:@"1"]) {
+        _canScroll = YES;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -49,14 +69,34 @@ static CGFloat const headViewHeight = 256;
     /**
      * 处理联动
      */
+    
     //获取滚动视图y值的偏移量
     CGFloat yOffset  = scrollView.contentOffset.y;
     
+    CGFloat tabOffsetY = [mainTableView rectForSection:0].origin.y;
+    CGFloat offsetY = scrollView.contentOffset.y;
     
-    if (yOffset > 0) {
-        
-        scrollView.contentOffset = CGPointMake(0, 0);
+    _isTopIsCanNotMoveTabViewPre = _isTopIsCanNotMoveTabView;
+    if (offsetY>=tabOffsetY) {
+        scrollView.contentOffset = CGPointMake(0, tabOffsetY);
+        _isTopIsCanNotMoveTabView = YES;
+    }else{
+        _isTopIsCanNotMoveTabView = NO;
     }
+    if (_isTopIsCanNotMoveTabView != _isTopIsCanNotMoveTabViewPre) {
+        if (!_isTopIsCanNotMoveTabViewPre && _isTopIsCanNotMoveTabView) {
+            //NSLog(@"滑动到顶端");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"goTop" object:nil userInfo:@{@"canScroll":@"1"}];
+            _canScroll = NO;
+        }
+        if(_isTopIsCanNotMoveTabViewPre && !_isTopIsCanNotMoveTabView){
+            //NSLog(@"离开顶端");
+            if (!_canScroll) {
+                scrollView.contentOffset = CGPointMake(0, tabOffsetY);
+            }
+        }
+    }
+    
     
     /**
      * 处理头部视图
