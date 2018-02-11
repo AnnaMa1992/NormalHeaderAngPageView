@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _myTableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    _myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height-64-44)];
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
     _myTableView.showsVerticalScrollIndicator = NO;

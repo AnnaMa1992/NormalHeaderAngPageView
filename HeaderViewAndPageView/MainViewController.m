@@ -11,23 +11,22 @@
 #import "SecondViewTableViewController.h"
 #import "ThirdViewCollectionViewController.h"
 #import "MainTouchTableTableView.h"
-#import "MYSegmentView.h"
+#import "ParentClassScrollViewController.h"
+#import "WMPageController.h"
 
 #define Main_Screen_Height      [[UIScreen mainScreen] bounds].size.height
 #define Main_Screen_Width       [[UIScreen mainScreen] bounds].size.width
+
 static CGFloat const headViewHeight = 256;
 
-@interface MainViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MainViewController ()<UITableViewDelegate,UITableViewDataSource,scrollDelegate,WMPageControllerDelegate>
 
 @property(nonatomic ,strong)MainTouchTableTableView * mainTableView;
-@property (nonatomic, strong) MYSegmentView * RCSegView;
+@property(nonatomic,strong) UIScrollView * parentScrollView;
+
 @property(nonatomic,strong)UIImageView *headImageView;//头部图片
 @property(nonatomic,strong)UIImageView * avatarImage;
 @property(nonatomic,strong)UILabel *countentLabel;
-
-@property (nonatomic, assign) BOOL canScroll;
-@property (nonatomic, assign) BOOL isTopIsCanNotMoveTabView;
-@property (nonatomic, assign) BOOL isTopIsCanNotMoveTabViewPre;
 
 @end
 
@@ -38,83 +37,126 @@ static CGFloat const headViewHeight = 256;
     [super viewDidLoad];
     
     self.navigationItem.title = @"HeaderAndPageView";
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
+
     [self.view addSubview:self.mainTableView];
+    
     [self.mainTableView addSubview:self.headImageView];
     
-    /* 
-     *
-     */
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(acceptMsg:) name:@"leaveTop" object:nil];
-
-}
-
--(void)acceptMsg : (NSNotification *)notification{
-    
-    NSDictionary *userInfo = notification.userInfo;
-    NSString *canScroll = userInfo[@"canScroll"];
-    if ([canScroll isEqualToString:@"1"]) {
-        _canScroll = YES;
+    if (@available(iOS 11.0, *)) {
+        self.mainTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
     }
+
 }
 
+#pragma scrollDelegate
+-(void)scrollViewLeaveAtTheTop:(UIScrollView *)scrollView
+{
+    self.parentScrollView = scrollView;
+    //离开顶部 主View 可以滑动
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.parentScrollView.scrollEnabled = NO;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    /**
-     * 处理联动
-     */
-    
+
     //获取滚动视图y值的偏移量
-    CGFloat yOffset  = scrollView.contentOffset.y;
-    
     CGFloat tabOffsetY = [mainTableView rectForSection:0].origin.y;
     CGFloat offsetY = scrollView.contentOffset.y;
-    
-    _isTopIsCanNotMoveTabViewPre = _isTopIsCanNotMoveTabView;
+
     if (offsetY>=tabOffsetY) {
         scrollView.contentOffset = CGPointMake(0, tabOffsetY);
-        _isTopIsCanNotMoveTabView = YES;
+         self.parentScrollView.scrollEnabled = YES;
     }else{
-        _isTopIsCanNotMoveTabView = NO;
-    }
-    if (_isTopIsCanNotMoveTabView != _isTopIsCanNotMoveTabViewPre) {
-        if (!_isTopIsCanNotMoveTabViewPre && _isTopIsCanNotMoveTabView) {
-            //NSLog(@"滑动到顶端");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"goTop" object:nil userInfo:@{@"canScroll":@"1"}];
-            _canScroll = NO;
-        }
-        if(_isTopIsCanNotMoveTabViewPre && !_isTopIsCanNotMoveTabView){
-            //NSLog(@"离开顶端");
-            if (!_canScroll) {
-                scrollView.contentOffset = CGPointMake(0, tabOffsetY);
-            }
-        }
     }
     
     
     /**
      * 处理头部视图
      */
+    CGFloat yOffset  = scrollView.contentOffset.y;
     if(yOffset < -headViewHeight) {
         
         CGRect f = self.headImageView.frame;
         f.origin.y= yOffset ;
         f.size.height=  -yOffset;
         f.origin.y= yOffset;
-
+        
         //改变头部视图的fram
         self.headImageView.frame= f;
         CGRect avatarF = CGRectMake(f.size.width/2-40, (f.size.height-headViewHeight)+56, 80, 80);
         _avatarImage.frame = avatarF;
         _countentLabel.frame = CGRectMake((f.size.width-Main_Screen_Width)/2+40, (f.size.height-headViewHeight)+172, Main_Screen_Width-80, 36);
     }
+}
 
+#pragma mark --tableDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return Main_Screen_Height-64;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+ 
+    /* 添加pageView
+     * 这里可以任意替换你喜欢的pageView
+     *作者这里使用一款github较多人使用的 WMPageController 地址https://github.com/wangmchn/WMPageController
+     */
+    [cell.contentView addSubview:self.setPageViewControllers];
+    
+    return cell;
+}
+
+
+#pragma mark -- setter/getter
+
+-(UIView *)setPageViewControllers
+{
+    WMPageController *pageController = [self p_defaultController];
+    pageController.title = @"Line";
+    pageController.menuViewStyle = WMMenuViewStyleLine;
+    pageController.titleSizeSelected = 15;
+    
+    [self addChildViewController:pageController];
+    [pageController didMoveToParentViewController:self];
+    return pageController.view;
+}
+
+- (WMPageController *)p_defaultController {
+    OneViewTableTableViewController * oneVc  = [OneViewTableTableViewController new];
+    oneVc.delegate = self;
+    SecondViewTableViewController * twoVc  = [SecondViewTableViewController new];
+    twoVc.delegate = self;
+    ThirdViewCollectionViewController * thirdVc  = [ThirdViewCollectionViewController new];
+    thirdVc.delegate = self;
+    
+    NSArray *viewControllers = @[oneVc,twoVc,thirdVc];
+    
+    NSArray *titles = @[@"first",@"second",@"third"];
+    WMPageController *pageVC = [[WMPageController alloc] initWithViewControllerClasses:viewControllers andTheirTitles:titles];
+    [pageVC setViewFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height)];
+    pageVC.delegate = self;
+    pageVC.menuItemWidth = 85;
+    pageVC.menuHeight = 44;
+    pageVC.postNotification = YES;
+    pageVC.bounces = YES;
+    return pageVC;
+}
+
+- (void)pageController:(WMPageController *)pageController willEnterViewController:(__kindof UIViewController *)viewController withInfo:(NSDictionary *)info {
+    NSLog(@"%@",viewController);
 }
 
 -(UIImageView *)headImageView
@@ -148,7 +190,7 @@ static CGFloat const headViewHeight = 256;
 }
 
 
--(UITableView *)mainTableView
+-(MainTouchTableTableView *)mainTableView
 {
     if (mainTableView == nil)
     {
@@ -162,53 +204,9 @@ static CGFloat const headViewHeight = 256;
     return mainTableView;
 }
 
-#pragma marl -tableDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return Main_Screen_Height-64;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    //添加pageView
-    [cell.contentView addSubview:self.setPageViewControllers];
-    
-    return cell;
-}
-
-/* 
- * 这里可以任意替换你喜欢的pageView
- */
--(UIView *)setPageViewControllers
-{
-    if (!_RCSegView) {
-        
-        OneViewTableTableViewController * First=[[OneViewTableTableViewController alloc]init];
-        
-        SecondViewTableViewController * Second=[[SecondViewTableViewController alloc]init];
-        
-        ThirdViewCollectionViewController * Third=[[ThirdViewCollectionViewController alloc]init];
-
-        NSArray *controllers=@[First,Second,Third];
-        
-        NSArray *titleArray =@[@"first",@"second",@"third"];
-       
-        MYSegmentView * rcs=[[MYSegmentView alloc]initWithFrame:CGRectMake(0, 0, Main_Screen_Width, Main_Screen_Height-64) controllers:controllers titleArray:titleArray ParentController:self lineWidth:Main_Screen_Width/5 lineHeight:3.];
-        
-        _RCSegView = rcs;
-    }
-    return _RCSegView;
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

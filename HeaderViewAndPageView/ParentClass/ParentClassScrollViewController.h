@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol scrollDelegate <NSObject>
+-(void)scrollViewLeaveAtTheTop:(UIScrollView *)scrollView;
+@end
+
 @interface ParentClassScrollViewController : UIViewController
 @property(strong, nonatomic)UIScrollView *scrollView;
 @property (nonatomic, assign) BOOL canScroll;
-
+@property(nonatomic,weak)id<scrollDelegate>delegate;
 @end

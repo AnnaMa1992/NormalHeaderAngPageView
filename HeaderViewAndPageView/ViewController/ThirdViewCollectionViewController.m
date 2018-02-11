@@ -24,8 +24,8 @@ static NSString * const reuseIdentifier = @"Cell";
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumInteritemSpacing = 6;
     flowLayout.minimumLineSpacing = 6;
-    self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:flowLayout];
-    
+    self.collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height-64-44) collectionViewLayout:flowLayout];
+
     [_collectionView registerClass :[UICollectionViewCell class ] forCellWithReuseIdentifier :@"cell" ];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"ReusableView"];
