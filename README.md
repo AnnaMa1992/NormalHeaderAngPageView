@@ -1,7 +1,7 @@
  一 、介绍
  NormalHeaderAngPageView
  -简单的头部视图和分段视图控制器的联动效果
- https://github.com/AnnaMa1992/NormalHeaderAngPageView/blob/master/HeaderViewAndPageView/UntitledNormal.gif
+NormalHeaderAngPageView/HeaderViewAndPageView/UntitledNormal.gif
  二、实现方法
 代码极其简单操作流畅，主视图用tableView搭建，只需要继承MainTouchTableTableView即可。
 分页的tableview等需要继承父类ParentClassScrollViewController
