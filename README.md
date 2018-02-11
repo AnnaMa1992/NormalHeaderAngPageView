@@ -1,6 +1,8 @@
  一 、介绍
  NormalHeaderAngPageView
- -简单的头部视图和分段视图控制器的联动效果
+ 
+ 简单的头部视图和分段视图控制器的联动效果
+ 
  ![image](https://github.com/AnnaMa1992/NormalHeaderAngPageView/blob/master/HeaderViewAndPageView/UntitledNormal.gif)   
 
  二、实现方法
