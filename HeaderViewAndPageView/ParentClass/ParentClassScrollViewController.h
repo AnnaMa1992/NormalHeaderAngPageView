@@ -10,10 +10,11 @@
 
 @protocol scrollDelegate <NSObject>
 -(void)scrollViewLeaveAtTheTop:(UIScrollView *)scrollView;
+-(void)scrollViewChangeTab:(UIScrollView *)scrollView;
 @end
 
 @interface ParentClassScrollViewController : UIViewController
-@property(strong, nonatomic)UIScrollView *scrollView;
-@property (nonatomic, assign) BOOL canScroll;
+
 @property(nonatomic,weak)id<scrollDelegate>delegate;
 @end
+

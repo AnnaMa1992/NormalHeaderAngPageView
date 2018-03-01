@@ -27,6 +27,13 @@ static CGFloat const headViewHeight = 256;
 @property(nonatomic,strong)UIImageView *headImageView;//头部图片
 @property(nonatomic,strong)UIImageView * avatarImage;
 @property(nonatomic,strong)UILabel *countentLabel;
+/*
+ * canScroll= yes : mainTableView 视图可以滚动，parentScrollView 禁止滚动
+ */
+@property (nonatomic, assign) BOOL canScroll;
+
+@property (nonatomic, assign) BOOL isTopIsCanNotMoveMainTableView;
+@property (nonatomic, assign) BOOL isTopIsCanNotMoveParentScrollView;
 
 @end
 
@@ -37,7 +44,7 @@ static CGFloat const headViewHeight = 256;
     [super viewDidLoad];
     
     self.navigationItem.title = @"HeaderAndPageView";
-
+    
     [self.view addSubview:self.mainTableView];
     
     [self.mainTableView addSubview:self.headImageView];
@@ -47,28 +54,69 @@ static CGFloat const headViewHeight = 256;
     }else {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-
+    
+    self.canScroll = YES;
 }
 
 #pragma scrollDelegate
 -(void)scrollViewLeaveAtTheTop:(UIScrollView *)scrollView
 {
     self.parentScrollView = scrollView;
+    
     //离开顶部 主View 可以滑动
+    self.canScroll = YES;
+}
 
-    self.parentScrollView.scrollEnabled = NO;
+-(void)scrollViewChangeTab:(UIScrollView *)scrollView
+{
+    self.parentScrollView = scrollView;
+    /*
+     * 如果已经离开顶端 切换tab parentScrollView的contentOffset 应该初始化位置
+     * 这一规则 仿简书
+     */
+    if (self.canScroll) {
+        self.parentScrollView.contentOffset = CGPointMake(0, 0);
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
+    
+    /*
+     *  处理联动事件
+     */
+    
     //获取滚动视图y值的偏移量
-    CGFloat tabOffsetY = [mainTableView rectForSection:0].origin.y;
+    CGFloat tabOffsetY = 0;
     CGFloat offsetY = scrollView.contentOffset.y;
-
+    
+    self.isTopIsCanNotMoveParentScrollView = self.isTopIsCanNotMoveMainTableView;
+    
     if (offsetY>=tabOffsetY) {
         scrollView.contentOffset = CGPointMake(0, tabOffsetY);
-         self.parentScrollView.scrollEnabled = YES;
+        self.isTopIsCanNotMoveMainTableView = YES;
     }else{
+        self.isTopIsCanNotMoveMainTableView = NO;
+    }
+    
+    if (self.isTopIsCanNotMoveMainTableView != self.isTopIsCanNotMoveParentScrollView) {
+        if (!self.isTopIsCanNotMoveParentScrollView && self.isTopIsCanNotMoveMainTableView) {
+            //滑动到顶端
+            self.canScroll = NO;
+        }
+        
+        if(self.isTopIsCanNotMoveParentScrollView && !self.isTopIsCanNotMoveMainTableView){
+            //离开顶端
+            if (!self.canScroll) {
+                scrollView.contentOffset = CGPointMake(0, tabOffsetY);
+            }else{
+                self.parentScrollView.contentOffset = CGPointMake(0, tabOffsetY);
+            }
+        }
+    }else
+    {
+        if (self.canScroll) {
+            self.parentScrollView.contentOffset = CGPointMake(0, tabOffsetY);
+        }
     }
     
     
@@ -109,7 +157,7 @@ static CGFloat const headViewHeight = 256;
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
- 
+    
     /* 添加pageView
      * 这里可以任意替换你喜欢的pageView
      *作者这里使用一款github较多人使用的 WMPageController 地址https://github.com/wangmchn/WMPageController

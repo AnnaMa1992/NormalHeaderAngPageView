@@ -20,7 +20,7 @@
 		90A05EBB1D58788900C8212A /* ThirdViewCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A05EBA1D58788900C8212A /* ThirdViewCollectionViewController.m */; };
 		90A05ECD1D58817A00C8212A /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90A05ECC1D58817A00C8212A /* bg.jpg */; };
 		90A05EDE1D596CA500C8212A /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90A05EDD1D596CA500C8212A /* avatar.jpg */; };
-		90A05EEB1D597D9800C8212A /* UntitledNormal.gif in Resources */ = {isa = PBXBuildFile; fileRef = 90A05EEA1D597D9800C8212A /* UntitledNormal.gif */; };
+		D22EE27E204815200029453D /* UntitledNormal.gif in Resources */ = {isa = PBXBuildFile; fileRef = D22EE27D204815200029453D /* UntitledNormal.gif */; };
 		D2818F4F20307DF500669BE5 /* MainTouchTableTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2818F4D20307DF500669BE5 /* MainTouchTableTableView.m */; };
 		D2818F5020307DF500669BE5 /* ParentClassScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2818F4E20307DF500669BE5 /* ParentClassScrollViewController.m */; };
 		D2818F5E20307E0B00669BE5 /* WMPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2818F5220307E0B00669BE5 /* WMPageController.m */; };
@@ -73,7 +73,7 @@
 		90A05EBA1D58788900C8212A /* ThirdViewCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewCollectionViewController.m; sourceTree = "<group>"; };
 		90A05ECC1D58817A00C8212A /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		90A05EDD1D596CA500C8212A /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
-		90A05EEA1D597D9800C8212A /* UntitledNormal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = UntitledNormal.gif; sourceTree = "<group>"; };
+		D22EE27D204815200029453D /* UntitledNormal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = UntitledNormal.gif; sourceTree = "<group>"; };
 		D2818F4B20307DF500669BE5 /* MainTouchTableTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTouchTableTableView.h; sourceTree = "<group>"; };
 		D2818F4C20307DF500669BE5 /* ParentClassScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentClassScrollViewController.h; sourceTree = "<group>"; };
 		D2818F4D20307DF500669BE5 /* MainTouchTableTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTouchTableTableView.m; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		90A05E7E1D58779600C8212A /* HeaderViewAndPageView */ = {
 			isa = PBXGroup;
 			children = (
-				90A05EEA1D597D9800C8212A /* UntitledNormal.gif */,
+				D22EE27D204815200029453D /* UntitledNormal.gif */,
 				90A05ECC1D58817A00C8212A /* bg.jpg */,
 				90A05EDD1D596CA500C8212A /* avatar.jpg */,
 				D2818F5120307E0B00669BE5 /* WMPageController */,
@@ -205,8 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				D2818F4B20307DF500669BE5 /* MainTouchTableTableView.h */,
-				D2818F4C20307DF500669BE5 /* ParentClassScrollViewController.h */,
 				D2818F4D20307DF500669BE5 /* MainTouchTableTableView.m */,
+				D2818F4C20307DF500669BE5 /* ParentClassScrollViewController.h */,
 				D2818F4E20307DF500669BE5 /* ParentClassScrollViewController.m */,
 			);
 			path = ParentClass;
@@ -343,7 +343,7 @@
 			files = (
 				90A05E8F1D58779600C8212A /* LaunchScreen.storyboard in Resources */,
 				90A05EDE1D596CA500C8212A /* avatar.jpg in Resources */,
-				90A05EEB1D597D9800C8212A /* UntitledNormal.gif in Resources */,
+				D22EE27E204815200029453D /* UntitledNormal.gif in Resources */,
 				90A05E8C1D58779600C8212A /* Assets.xcassets in Resources */,
 				90A05ECD1D58817A00C8212A /* bg.jpg in Resources */,
 				90A05E8A1D58779600C8212A /* Main.storyboard in Resources */,

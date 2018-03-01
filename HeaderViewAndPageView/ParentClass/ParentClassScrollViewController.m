@@ -9,10 +9,18 @@
 #import "ParentClassScrollViewController.h"
 
 @interface ParentClassScrollViewController ()<UIGestureRecognizerDelegate>
-
+@property(strong, nonatomic)UIScrollView *scrollView;
 @end
 
 @implementation ParentClassScrollViewController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    if(self.delegate)
+    {
+        [self.delegate scrollViewChangeTab:self.scrollView];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -20,7 +28,6 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     CGFloat offsetY = scrollView.contentOffset.y;
-    
     if (offsetY<0) {
         //离开顶部
         if(self.delegate)
@@ -50,3 +57,4 @@
 }
 
 @end
+
