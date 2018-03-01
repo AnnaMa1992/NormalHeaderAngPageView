@@ -39,7 +39,7 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionView.backgroundColor = [UIColor colorWithRed:242/255. green:242/255. blue:242/255. alpha:1.];
     self.collectionView.directionalLockEnabled = YES;
     [self.view addSubview:self.collectionView];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -48,7 +48,9 @@ static CGFloat const headViewHeight = 256;
     [self.view addSubview:self.mainTableView];
     
     [self.mainTableView addSubview:self.headImageView];
-    
+    //支持下刷新。关闭弹簧效果
+    self.mainTableView.bounces =  NO;
+//
     if (@available(iOS 11.0, *)) {
         self.mainTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }else {
@@ -89,6 +91,12 @@ static CGFloat const headViewHeight = 256;
     CGFloat tabOffsetY = 0;
     CGFloat offsetY = scrollView.contentOffset.y;
     
+    if (offsetY >=headViewHeight) {
+        
+        scrollView.contentOffset = CGPointMake(0, tabOffsetY);
+        offsetY = tabOffsetY;
+    }
+    
     self.isTopIsCanNotMoveParentScrollView = self.isTopIsCanNotMoveMainTableView;
     
     if (offsetY>=tabOffsetY) {
@@ -114,8 +122,14 @@ static CGFloat const headViewHeight = 256;
         }
     }else
     {
-        if (self.canScroll) {
-            self.parentScrollView.contentOffset = CGPointMake(0, tabOffsetY);
+        if (!self.canScroll){
+             //支持下刷新,下拉时maintableView 没有滚动到位置 parentScrollView 不进行刷新
+            CGFloat parentScrollViewOffsetY = self.parentScrollView.contentOffset.y;
+            if(parentScrollViewOffsetY >0)
+                self.parentScrollView.contentOffset = CGPointMake(0, 0);
+        }else
+        {
+            self.parentScrollView.contentOffset = CGPointMake(0, 0);
         }
     }
     
@@ -123,20 +137,20 @@ static CGFloat const headViewHeight = 256;
     /**
      * 处理头部视图
      */
-    CGFloat yOffset  = scrollView.contentOffset.y;
-    if(yOffset < -headViewHeight) {
-        
-        CGRect f = self.headImageView.frame;
-        f.origin.y= yOffset ;
-        f.size.height=  -yOffset;
-        f.origin.y= yOffset;
-        
-        //改变头部视图的fram
-        self.headImageView.frame= f;
-        CGRect avatarF = CGRectMake(f.size.width/2-40, (f.size.height-headViewHeight)+56, 80, 80);
-        _avatarImage.frame = avatarF;
-        _countentLabel.frame = CGRectMake((f.size.width-Main_Screen_Width)/2+40, (f.size.height-headViewHeight)+172, Main_Screen_Width-80, 36);
-    }
+//    CGFloat yOffset  = scrollView.contentOffset.y;
+//    if(yOffset < -headViewHeight) {
+//
+//        CGRect f = self.headImageView.frame;
+//        f.origin.y= yOffset ;
+//        f.size.height=  -yOffset;
+//        f.origin.y= yOffset;
+//
+//        //改变头部视图的fram
+//        self.headImageView.frame= f;
+//        CGRect avatarF = CGRectMake(f.size.width/2-40, (f.size.height-headViewHeight)+56, 80, 80);
+//        _avatarImage.frame = avatarF;
+//        _countentLabel.frame = CGRectMake((f.size.width-Main_Screen_Width)/2+40, (f.size.height-headViewHeight)+172, Main_Screen_Width-80, 36);
+//    }
 }
 
 #pragma mark --tableDelegate

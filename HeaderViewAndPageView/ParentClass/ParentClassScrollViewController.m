@@ -35,7 +35,13 @@
             [self.delegate scrollViewLeaveAtTheTop:scrollView];
         }
     }
-    _scrollView = scrollView;
+    if (!self.scrollView) {
+        if(self.delegate)
+        {
+            [self.delegate scrollViewChangeTab:scrollView];
+        }
+    }
+        _scrollView = scrollView;
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer

@@ -7,6 +7,7 @@
 //
 
 #import "OneViewTableTableViewController.h"
+#import "MJRefresh.h"
 
 @interface OneViewTableTableViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -25,6 +26,16 @@
     _myTableView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:_myTableView];
     _myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // 下拉刷新
+    _myTableView.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 结束刷新
+            [_myTableView.mj_header endRefreshing];
+        });
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,7 +52,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 2;
+    return 20;
 }
 
 
