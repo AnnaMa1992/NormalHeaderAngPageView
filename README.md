@@ -3,7 +3,7 @@
  
  简单的头部视图和分段视图控制器的联动效果
  
- ![image](https://github.com/AnnaMa1992/NormalHeaderAngPageView/blob/master/HeaderViewAndPageView/UntitledNormal.gif)   
+ ![image](https://github.com/AnnaMa1992/NormalHeaderAngPageView/HeaderViewAndPageView/Untitled2.gif)   
 
  二、实现方法
 代码极其简单操作流畅，主视图用tableView搭建，只需要继承MainTouchTableTableView即可。
@@ -32,4 +32,4 @@
     return (UIViewController *)self.viewControllerClasses[index];
 }
 
-言语苍白 具体实现请看代码。 
+最新更新-支持列表下拉刷新
