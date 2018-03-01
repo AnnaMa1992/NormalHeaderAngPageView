@@ -3,7 +3,7 @@
  
  简单的头部视图和分段视图控制器的联动效果
  
- ![image](https://github.com/AnnaMa1992/NormalHeaderAngPageView/HeaderViewAndPageView/Untitled2.gif)   
+ ![image](https://github.com/AnnaMa1992/NormalHeaderAngPageView/blob/master/HeaderViewAndPageView/Untitled2.gif)   
 
  二、实现方法
 代码极其简单操作流畅，主视图用tableView搭建，只需要继承MainTouchTableTableView即可。
